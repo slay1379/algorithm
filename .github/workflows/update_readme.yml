@@ -32,7 +32,7 @@ jobs:
         git config --global user.name 'slay1379'
         git config --global user.email 'palgalow@gmail.com'
         git add -A
-        git commit -m "auto update README.md"
+        git commit -m "auto update README.md" || echo "No changes to commit"
     - name: Push changes
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
