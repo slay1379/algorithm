@@ -26,7 +26,7 @@ jobs:
         pip install python-leetcode
     - name: Run update.py
       run: |
-        python update.py
+        python ./update.py  # 파일 경로를 ./update.py로 수정
     - name: Commit changes
       run: |
         git config --global user.name 'slay1379'
