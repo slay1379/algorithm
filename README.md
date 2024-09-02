@@ -7,6 +7,7 @@
 ### 🚀 Bronze
 | 문제번호 | 링크 |
 | ----- | ----- |
+|1000. A＋B|[링크](./%EB%B0%B1%EC%A4%80/Bronze/1000.%E2%80%85A%EF%BC%8BB/README.md)|
 |10219. Meats On The Grill|[링크](./%EB%B0%B1%EC%A4%80/Bronze/10219.%E2%80%85Meats%E2%80%85On%E2%80%85The%E2%80%85Grill/Meats%E2%80%85On%E2%80%85The%E2%80%85Grill.py)|
 |14935. FA|[링크](./%EB%B0%B1%EC%A4%80/Bronze/14935.%E2%80%85FA/FA.py)|
 |2851. 슈퍼 마리오|[링크](./%EB%B0%B1%EC%A4%80/Bronze/2851.%E2%80%85%EC%8A%88%ED%8D%BC%E2%80%85%EB%A7%88%EB%A6%AC%EC%98%A4/%EC%8A%88%ED%8D%BC%E2%80%85%EB%A7%88%EB%A6%AC%EC%98%A4.py)|
