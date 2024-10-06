@@ -25,9 +25,14 @@ def solution(operation):
                         in_heap_number[now] -= 1
                         break
 
-    valid_number = [key for key, count in in_heap_number.items() if count > 0]
+    valid_number = []
     
+    for key,count in in_heap_number.items():
+        if count > 0:
+            valid_number.append(key)
+
     if valid_number:
         return [max(valid_number),min(valid_number)]
     else:
         return [0,0]
+
