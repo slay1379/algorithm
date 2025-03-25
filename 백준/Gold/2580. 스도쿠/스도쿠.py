@@ -1,48 +1,45 @@
 import sys
 input = sys.stdin.readline
-from collections import deque
-import heapq
+from collections import Counter
 
 board = [list(map(int,input().split())) for _ in range(9)]
-zeros = []
 
-rowUsed = [[False]*10 for _ in range(9)]
-colUsed = [[False]*10 for _ in range(9)]
-boxUsed = [[False]*10 for _ in range(9)]
-
-def box_index(x,y):
-    return (x//3)*3 + (y//3)
-
+empties = []
 for i in range(9):
     for j in range(9):
-        val = board[i][j]
-        if val != 0:
-            rowUsed[i][val] = True
-            colUsed[j][val] = True
-            boxUsed[box_index(i,j)][val] = True
-        else:
-            zeros.append((i,j))
+        if board[i][j] == 0:
+            empties.append((i,j))
 
-def backtrack(idx):
-    if idx == len(zeros):
-        for row in board:
-            print(*row)
-        sys.exit(0)
+def check_row(x,num):
+    for i in range(9):
+        if board[x][i] == num:
+            return False
+    return True
 
-    x,y = zeros[idx]
-    b = box_index(x,y)
-    for val in range(1,10):
-        if not rowUsed[x][val] and not colUsed[y][val] and not boxUsed[b][val]:
-            rowUsed[x][val] = True
-            colUsed[y][val] = True
-            boxUsed[b][val] = True
-            board[x][y] = val
+def check_col(y,num):
+    for i in range(9):
+        if board[i][y] == num:
+            return False
+    return True
 
-            backtrack(idx + 1)
+def check_box(x,y,num):
+    new_x,new_y = x//3*3,y//3*3
+    for i in range(new_x,new_x+3):
+        for j in range(new_y,new_y+3):
+            if board[i][j] == num:
+                return False
+    return True
 
+def fill(idx):
+    x,y = empties[idx]
+    for i in range(1,10):
+        if check_row(x,i) and check_col(y,i) and check_box(x,y,i):
+            board[x][y] = i
+            if idx == len(empties)-1:
+                for row in board:
+                    print(*row)
+                exit()
+            fill(idx+1)
             board[x][y] = 0
-            rowUsed[x][val] = False
-            colUsed[y][val] = False
-            boxUsed[b][val] = False
 
-backtrack(0)
+fill(0)
