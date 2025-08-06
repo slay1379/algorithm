@@ -1,9 +1,9 @@
-from collections import Counter
+import collections
 
 def solution(participant, completion):
-    participant.sort()
-    completion.sort()
-    for i in range(len(completion)):
-        if participant[i] != completion[i]:
-            return participant[i]
-    return participant[-1]
+    p_dictionary = collections.Counter(participant)
+    c_dictionary = collections.Counter(completion)
+    
+    for key in participant:
+        if p_dictionary[key] != c_dictionary[key]:
+            return key
