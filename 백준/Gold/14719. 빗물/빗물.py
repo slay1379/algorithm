@@ -6,16 +6,23 @@ blocks = list(map(int,input().split()))
 
 rainwater = 0
 
-for i in range(len(blocks)):
-    for height in range(blocks[i],0,-1):
-        cnt = 0
-        for j in range(i + 1, len(blocks)):
-            if j >= len(blocks):
-                break
-            if blocks[j] >= height:
-                rainwater += cnt
-                break
-            cnt += 1
-
+for i in range(1,W-1):
+    left,right = i,i
+    max_left, max_right = i,i
+    while True:
+        left -= 1
+        if blocks[left] > blocks[max_left]:
+            max_left = left
+        if left == 0:
+            break
+    while True:
+        right += 1
+        if blocks[right] > blocks[max_right]:
+            max_right = right
+        if right == W-1:
+            break
+    if max_left == i or max_right == i:
+        continue
+    rainwater += min(blocks[max_left], blocks[max_right]) - blocks[i]
 
 print(rainwater)
