@@ -1,17 +1,18 @@
 import sys
 input = sys.stdin.readline
-from collections import Counter
+from collections import deque
+from collections import defaultdict
+import heapq
 
-n = int(input())
-for _ in range(n):
-    t = int(input())
-    clothes = {}
-    for _ in range(t):
-        name, type = input().split()
-        if type not in clothes:
-            clothes[type] = []
-        clothes[type].append(name)
-    count = 1
-    for type in clothes:
-        count *= (len(clothes[type])+1)
-    print(count-1)
+t = int(input())
+for _ in range(t):
+    n = int(input())
+    clothes = defaultdict(list)
+    for _ in range(n):
+        name, category = map(str,input().split())
+        clothes[category].append(name)
+
+    answer = 1
+    for key in clothes:
+        answer *= (len(clothes[key]) + 1)
+    print(answer - 1)
