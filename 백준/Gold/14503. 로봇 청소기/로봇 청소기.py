@@ -1,51 +1,49 @@
 import sys
 input = sys.stdin.readline
-sys.setrecursionlimit(10**6)
-from itertools import combinations
 from collections import deque
 from collections import defaultdict
 import heapq
 
-def is_empty(x,y):
-    for dx,dy in dir:
-        nx = x+dx
-        ny = y+dy
-        if room[nx][ny] == 0:
+N,M = map(int,input().split())
+r,c,d = map(int,input().split())
+board = [list(map(int,input().split())) for _ in range(N)]
+answer = 0
+
+nx = [-1,0,1,0]
+ny = [0,1,0,-1]
+
+q = deque()
+q.append((r,c,d))
+
+def check_cleanable_room(x,y):
+    for i in range(4):
+        dx = x+nx[i]
+        dy = y+ny[i]
+        if 0<=dx<N and 0<=dy<M and board[dx][dy] == 0:
             return True
     return False
 
-
-N,M = map(int,input().split())
-r,c,d = map(int,input().split())
-
-room = [list(map(int,input().split())) for _ in range(N)]
-dir = [(-1,0),(0,1),(1,0),(0,-1)]
-answer = 0
-
-q = deque()
-q.append((r,c))
-
 while q:
-    x,y = q.popleft()
-    if room[x][y] == 0:
-        room[x][y] = -1
+    x,y,d = q.popleft()
+    if board[x][y] == 0:
         answer += 1
-    if is_empty(x,y):
+        board[x][y] = 2
+    if check_cleanable_room(x,y):
         while True:
-            if d == 0:
+            d -= 1
+            if d == -1:
                 d = 3
-            else:
-                d -= 1
-            dx,dy = dir[d]
-            nx = x+dx
-            ny = y+dy
-            if room[nx][ny] == 0:
-                q.append((nx,ny))
+            dx = x + nx[d]
+            dy = y + ny[d]
+            if 0 <= dx < N and 0 <= dy < M and board[dx][dy] == 0:
+                q.append((dx, dy, d))
                 break
     else:
-        nx,ny = dir[(d+2)%4]
-        if room[x+nx][y+ny] != 1:
-            q.append((x+nx,y+ny))
+        bd = (d+2) % 4
+        dx = x+nx[bd]
+        dy = y+ny[bd]
+        if 0<=dx<N and 0<=dy<M and board[dx][dy] != 1:
+            q.append((dx,dy,d))
         else:
             break
 
