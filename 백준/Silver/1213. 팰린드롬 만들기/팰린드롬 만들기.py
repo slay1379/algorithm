@@ -1,36 +1,29 @@
 import sys
 input = sys.stdin.readline
+from collections import deque
+from collections import defaultdict
+import heapq
+from itertools import combinations
 from collections import Counter
 
-name = input().strip()
-element = Counter(name)
-state = False
-add_value = None
+line = input().strip()
+result = [[char, line.count(char)] for char in set(line)]
 
-for value in element.values():
-    if value % 2 != 0:
-        if state:
+flag = False
+mid = ''
+for i in range(len(result)):
+    if result[i][1] % 2 != 0:
+        if flag:
             print("I'm Sorry Hansoo")
             exit()
-        state = True
+        flag = True
+        mid = result[i][0]
 
-element_count = sorted(element.items())
-front = []
-for key,value in element_count:
-    for i in range(value//2
-                   ):
-        front.append(key)
-    if value % 2 != 0:
-        add_value = key
+result.sort()
+
+front = ''
+for ch, num in result:
+    front += ch*(num//2)
 
 back = front[::-1]
-answer = []
-for element in front:
-    answer.append(element)
-if add_value is not None:
-    answer.append(add_value)
-for element in back:
-    answer.append(element)
-
-for element in answer:
-    print(element,end='')
+print(front+mid+back)
