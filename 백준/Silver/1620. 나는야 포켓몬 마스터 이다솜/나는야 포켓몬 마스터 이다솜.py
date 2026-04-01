@@ -1,19 +1,22 @@
 import sys
 input = sys.stdin.readline
-from collections import Counter
+from collections import deque
+from collections import defaultdict
+import heapq
+from itertools import combinations
 
 N,M = map(int,input().split())
-name_to_num = {}
-num_to_name = {}
+pocketmons_name = dict()
+pocketmons_num = dict()
 
 for i in range(1,N+1):
-    name = input().strip()
-    name_to_num[name] = i
-    num_to_name[i] = name
+    pocketmon = input().strip()
+    pocketmons_name[pocketmon] = i
+    pocketmons_num[i] = pocketmon
 
 for _ in range(M):
-    oper = input().strip()
-    if oper.isdigit():
-        print(num_to_name[int(oper)])
+    line = input().strip()
+    if line.isdigit():
+        print(pocketmons_num[int(line)])
     else:
-        print(name_to_num[oper])
+        print(pocketmons_name[line])
