@@ -1,26 +1,26 @@
 import sys
 input = sys.stdin.readline
-sys.setrecursionlimit(10**6)
-from itertools import combinations
 from collections import deque
 from collections import defaultdict
 import heapq
-
+from itertools import combinations
+from collections import Counter
 
 N = int(input())
 M = int(input())
-nums = list(map(int,input().split()))
+ingredient = list(map(int,input().split()))
 
-nums.sort()
-
+ingredient.sort()
 left,right = 0,N-1
-answer = 0
 
+answer = 0
 while left<right:
-    now = nums[left]+nums[right]
-    if now == M:
+    plus = ingredient[left] + ingredient[right]
+    if plus == M:
         answer += 1
-    if now >= M:
+        right -= 1
+        left += 1
+    elif plus > M:
         right -= 1
     else:
         left += 1
