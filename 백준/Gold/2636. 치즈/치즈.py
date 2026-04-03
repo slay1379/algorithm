@@ -1,64 +1,48 @@
 import sys
 input = sys.stdin.readline
 from collections import deque
+from collections import defaultdict
+import heapq
+from itertools import combinations
+from collections import Counter
 
-R,C = map(int,input().split())
-cheeze = [list(map(int,input().split())) for _ in range(R)]
-
-dir = [(1,0),(-1,0),(0,1),(0,-1)]
-
-q = deque()
-cheezeQ = deque()
-day = 0
+N,M = map(int,input().split())
+board = [list(map(int,input().split())) for _ in range(N)]
+hour = 0
 answer = 0
+prev = 0
 
-for i in range(R):
-    for j in range(C):
-        if i == 0 or i == R-1 or j == 0 or j == C-1:
-            cheeze[i][j] = -1
-            q.append((i,j))
+cheeze = deque()
+cheeze.append((0,0))
+dx = [-1,1,0,0]
+dy = [0,0,-1,1]
 
-while q:
-    x,y = q.popleft()
-    for dx,dy in dir:
-        nx,ny = x+dx,y+dy
-        if 0<=nx<R and 0<=ny<C:
-            if cheeze[nx][ny] == 0:
-                q.append((nx,ny))
-                cheeze[nx][ny] = -1
-            if cheeze[nx][ny] == 1:
-                cheezeQ.append((nx,ny))
-                cheeze[nx][ny] = -1
+for i in range(N):
+    for j in range(M):
+        if board[i][j] == 1:
+            answer += 1
 
-while cheezeQ:
-    day += 1
-    answer = len(cheezeQ)
-    for _ in range(len(cheezeQ)):
-        x,y = cheezeQ.popleft()
-        for dx,dy in dir:
-            nx,ny = x+dx, y+dy
-            if 0<=nx<R and 0<=ny<C:
-                if cheeze[nx][ny] == 1:
-                    cheezeQ.append((nx,ny))
-                    cheeze[nx][ny] = -1
-                if cheeze[nx][ny] == 0:
-                    q.append((nx,ny))
-                    cheeze[nx][ny] = -1
+while True:
+    if hour != 0:
+        prev = answer
+        answer -= len(cheeze)
+    if answer == 0:
+        break
+    hour += 1
+    q = deque(cheeze)
+    cheeze = deque()
     while q:
         x,y = q.popleft()
-        for dx,dy in dir:
-            nx,ny = x+dx, y+dy
-            if 0<=nx<R and 0<=ny<C:
-                if cheeze[nx][ny] == 0:
+        for i in range(4):
+            nx = x+dx[i]
+            ny = y+dy[i]
+            if 0<=nx<N and 0<=ny<M:
+                if board[nx][ny] == 0:
                     q.append((nx,ny))
-                    cheeze[nx][ny] = -1
-                if cheeze[nx][ny] == 1:
-                    cheezeQ.append((nx,ny))
-                    cheeze[nx][ny] = -1
+                    board[nx][ny] = -1
+                elif board[nx][ny] == 1:
+                    cheeze.append((nx,ny))
+                    board[nx][ny] = -1
 
-print(day)
-print(answer)
-
-
-
-
+print(hour)
+print(prev)
