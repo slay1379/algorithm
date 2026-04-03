@@ -1,34 +1,33 @@
 import sys
 input = sys.stdin.readline
-sys.setrecursionlimit(10**6)
-from itertools import combinations
 from collections import deque
 from collections import defaultdict
 import heapq
-
+from itertools import combinations
+from collections import Counter
 
 while True:
-    s = input().rstrip()
-    stack = []
-    balance = True
-    if s == '.':
+    line = input().rstrip()
+    if line == '.':
         break
-    for i in s:
-        if i == '(' or i == '[':
-            stack.append(i)
-        elif i == ')':
+    stack = []
+    flag = True
+    for ch in line:
+        if ch == '(' or ch == '[':
+            stack.append(ch)
+        elif ch == ')':
             if stack and stack[-1] == '(':
                 stack.pop()
             else:
-                balance = False
+                flag = False
                 break
-        elif i == ']':
+        elif ch == ']':
             if stack and stack[-1] == '[':
                 stack.pop()
             else:
-                balance = False
+                flag = False
                 break
-    if balance and not stack:
-        print('yes')
+    if not flag or stack:
+        print("no")
     else:
-        print('no')
+        print("yes")
