@@ -1,25 +1,21 @@
 import sys
 input = sys.stdin.readline
 from collections import deque
+from collections import defaultdict
 import heapq
+from itertools import combinations
+from collections import Counter
 
-N,C = map(int,input().split())
-message = list(map(int,input().split()))
+N, C = map(int,input().split())
+seq = list(map(int,input().split()))
 
-freq = {}
-first_index = {}
+count = Counter(seq)
 
-for i, num in enumerate(message):
-    if num not in freq:
-        freq[num] = 0
-        first_index[num] = i
-    freq[num] += 1
+order = {}
+for i,num in enumerate(seq):
+    if num not in order:
+        order[num] = i
 
-unique_nums = list(freq.keys())
-unique_nums.sort(key=lambda  x: (-freq[x],first_index[x]))
+seq.sort(key=lambda x: (-count[x],order[x]))
+print(*seq)
 
-result = []
-for num in unique_nums:
-    result.extend([num] * freq[num])
-
-print(*result)
